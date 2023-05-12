@@ -1,0 +1,51 @@
+/* Context menu */
+#context-menu{
+    display: none;
+    position: absolute;
+    border: 1px solid black;
+    border-radius: 3px;
+    width: 200px;
+    background: white;
+    box-shadow: 10px 10px 5px #888888;
+}
+
+#context-menu ul{
+	margin: 0;
+    list-style: none !important;
+	list-style-type: none !important;
+    padding: 2px !important;
+}
+
+#context-menu ul li{
+    padding: 5px 2px;
+    margin-bottom: 3px;
+    color: white;
+    font-weight: bold;
+    background-color: darkturquoise;
+	list-style: none;
+	list-style-type: none;
+}
+
+#context-menu ul li:hover{
+    cursor: pointer;
+    background-color: #7fffd4;
+}
+
+/* Colors */
+.Gainsboro ,.Orange ,.Plum {
+    width:15px;
+    height:15px;
+    border: 0px solid black;
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.Gainsboro {
+    background-color: Gainsboro ;
+}
+.Orange {
+    background-color: Orange ;
+}
+.Plum {
+    background-color: Plum ;
+}

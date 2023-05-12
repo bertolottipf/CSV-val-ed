@@ -1,0 +1,155 @@
+
+#columns:empty {
+	display: none;
+}
+
+#col_add {
+	background-color: #45d74e;
+	opacity: 0.5;
+	
+	/*height: 6em;*/
+	line-height:6em;
+	
+	text-align: center;
+}
+
+#col_add:hover {
+	opacity: 1;
+}
+
+
+.col-val-add {
+	padding: .5em;
+}
+
+
+
+.col-name{
+	background-color: #6d84df;
+}
+
+.col-validators {
+	height: 50%;
+}
+
+.col-val-add {
+	position: relative;
+	bottom: 0;
+	left: 0;
+	background-color: #6d84df;
+	text-align: center;
+	opacity: 0.5;
+}
+
+.col-val-add:hover {
+	opacity: 1;
+}
+
+
+
+
+
+.required {
+	color: red;
+}
+
+
+table#validators {
+	display: table;
+	height: 100%;
+}
+
+table#validators td {
+	display: table-cell;
+	height: 100%;
+	vertical-align: top;
+}
+
+#col_add {
+	height: 100%;
+}
+
+
+
+.column_validators_tab tr {
+	padding-left:24px;
+	padding-right:24px;
+}
+
+
+#column_names {
+	background-color: darkgray;
+	font-size: large;
+}
+
+
+#validators th {
+	border-left: 1px solid darkslategrey;
+	border-right: 1px solid darkslategrey;
+}
+
+#validators td {
+	border-left: 1px solid darkslategrey;
+	border-right: 1px solid darkslategrey;
+}
+
+.column_validators_tab th {
+	border-left: 0px !important;
+	border-right: 0px !important;
+}
+
+.column_validators_tab td {
+	border-left: 0px !important;
+	border-right: 0px !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.container-triangle{
+	position: relative;
+}
+
+
+.triangle{
+	border-left: 1em solid transparent;
+	border-right: 1em solid gray;
+	border-bottom: 1em solid transparent;
+	height: 0;
+	width: 0;
+	position: absolute;
+	right: -12px;
+	top: -12px;
+	z-index: 1;
+}
+
+
+
+
+#col_add_td {
+	border: 1px solid #dee2e6 !important;
+}
+
+tr#column_names td:nth-last-child(2) {
+	border-right: 1px solid #dee2e6;
+}
+
+#validators td:nth-child(1) {
+	border-left: 1px solid #dee2e6 !important;
+}
+
+
+

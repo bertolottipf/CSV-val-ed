@@ -1,0 +1,26 @@
+h1 a:hover {
+	text-decoration: none;
+}
+
+h1 > a > img {
+	height: 2em;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+h1 > span > img {
+    width: 100%;
+}
+
+span.badge {
+    width: 1.3em;
+    padding: 0;
+}
+
+a, a:hover {
+	color: black;
+}

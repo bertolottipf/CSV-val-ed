@@ -1,0 +1,105 @@
+
+
+
+fieldset {
+	margin: 1em 0 !important;
+	text-align: left;
+}
+
+#lockEnclosures, #lockDelimiters {
+	margin-left: 0.3em;
+	width: fit-content;
+}
+
+
+#indexform {
+	margin-bottom: 3em;
+}
+
+input[type=file], /* FF, IE7+, chrome (except button) */
+input[type=file]::-webkit-file-upload-button { /* chromes and blink button */
+	cursor: pointer; 
+}
+
+
+
+
+
+@keyframes hideshow {
+	0% { opacity: 1; }
+	10% { opacity: 1; }
+	15% { opacity: 0; }
+	100% { opacity: 0; }
+} 
+
+
+#sponsorsimg #layer1 {
+	animation: hideshow 10s ease infinite;
+}
+
+#sponsorsimg #layer2 {
+	opacity: 0;
+	animation: hideshow 10s 1.5s ease infinite;
+}
+#sponsorsimg #layer3 {
+	opacity: 0;
+	animation: hideshow 10s 3s ease infinite;
+}
+#sponsorsimg #layer4 {
+	opacity: 0;
+	animation: hideshow 10s 4.5s ease infinite;
+}
+#sponsorsimg #layer5 {
+	opacity: 0;
+	animation: hideshow 10s 6s ease infinite;
+}
+#sponsorsimg #layer6 {
+	opacity: 0;
+	animation: hideshow 10s 7.5s ease infinite;
+}
+
+
+
+
+
+
+
+
+
+
+input.likeText {
+	width: 100%;
+	background-color: transparent;
+	border: 0px solid;
+}
+
+textarea:focus, input:focus{
+	outline: none;
+}
+
+
+
+/* span.badge {
+	width: 1.3em;
+	padding: 0;
+}
+
+span.badge object {
+	width: 100%;
+} */
+
+
+
+
+
+
+
+
+
+
+
+
+
+.font-weight-bold {
+	font-weight: 700;
+}

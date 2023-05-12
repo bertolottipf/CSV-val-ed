@@ -1,0 +1,173 @@
+/* * { 
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+
+body { min-height: 100vh; }
+
+
+
+
+.form-group {
+	margin-bottom: 1rem;
+}
+
+
+
+
+
+
+td.error, 
+th.error {
+	background: #ff0000 !important; 
+	--bs-table-accent-bg: #ff0000 !important; 
+}
+
+
+
+div.error {
+	margin-bottom: 0.2em;
+}
+
+
+thead td {
+	font-weight: bold;
+}
+
+fieldset {
+	margin: 1em 0 !important;
+}
+
+#lockEnclosures, #lockDelimiters {
+	margin-left: 0.3em;
+}
+
+
+#indexform {
+	margin-bottom: 3em;
+}
+
+input[type=file], /* FF, IE7+, chrome (except button) * /
+input[type=file]::-webkit-file-upload-button { /* chromes and blink button * /
+	cursor: pointer; 
+}
+
+
+
+
+
+@keyframes hideshow {
+	0% { opacity: 1; }
+	10% { opacity: 1; }
+	15% { opacity: 0; }
+	100% { opacity: 0; }
+} 
+
+
+#sponsorsimg #layer1 {
+	animation: hideshow 10s ease infinite;
+}
+
+#sponsorsimg #layer2 {
+	opacity: 0;
+	animation: hideshow 10s 1.5s ease infinite;
+}
+#sponsorsimg #layer3 {
+	opacity: 0;
+	animation: hideshow 10s 3s ease infinite;
+}
+#sponsorsimg #layer4 {
+	opacity: 0;
+	animation: hideshow 10s 4.5s ease infinite;
+}
+#sponsorsimg #layer5 {
+	opacity: 0;
+	animation: hideshow 10s 6s ease infinite;
+}
+#sponsorsimg #layer6 {
+	opacity: 0;
+	animation: hideshow 10s 7.5s ease infinite;
+}
+
+
+
+
+
+
+
+th {
+	content:”\00A3″; font-family: “Font Awesome 5 Free“; font-weight: 900; 
+}
+
+
+input.likeText {
+	width: 100%;
+	background-color: transparent;
+	border: 0px solid;
+}
+
+textarea:focus, input:focus{
+	outline: none;
+}
+
+
+
+span.badge {
+	width: 1.3em;
+	padding: 0;
+}
+
+span.badge object {
+	width: 100%;
+}
+
+h1 a:hover {
+	text-decoration: none;
+}
+
+h1 > a > img {
+	height: 2em;
+}
+
+h1 > span > img {
+	width: 100%;
+}
+
+
+
+
+
+
+ul {
+	margin-left: 1em;
+}
+
+
+
+
+#exports {
+	position: fixed;
+	bottom: 4em;
+	right: 1em;
+}
+
+#errors {
+	position: fixed;
+	bottom: 4em;
+	left: 1em;
+}
+
+#actionButtons {
+	background-color: #000000aa;
+	position: fixed;
+	bottom: 0em;
+	width: 100%;
+	height: 4em;
+}
+
+.font-weight-bold {
+	font-weight: 700;
+}
+*/
