@@ -1,7 +1,7 @@
 import * as React from "react";
 import logo from "../Images/CSVValED.png";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './Heading.css';
+import './styles/Heading.css';
 import { Link } from "react-router-dom";
 
 class Heading extends React.Component {

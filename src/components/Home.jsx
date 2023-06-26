@@ -4,11 +4,11 @@ import React, { useState, useRef } from 'react';
 
 import Validator from './Validator.js'
 
-import { setReset } from '../Scripts/Home.js'
+import { setReset } from './scripts/Home.js'
 
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './Home.css';
+import './styles/Home.css';
 
 
 
