@@ -6,7 +6,7 @@ function Help() {
 		<>
 			<h2>Help</h2>
 
-			<h6>Validation</h6>
+			<h3>Validation</h3>
 			<p>Let's assume that we have a large csv with column headings each of which has a specific request
 				and we need to check the data, you can do this by setting up such a formatted csv file:</p>
 
@@ -44,7 +44,7 @@ function Help() {
 			</p>
 
 
-			<h6>Validator generator</h6>
+			<h3>Validator generator</h3>
 
 			<p><strong>Clicking "Generate new one" beside "File VAL" file selector, it's possible generate a new file validator. Right-mouse-click can be usefull to delete or edit regulars espressions and columns.</strong></p>
 		</>

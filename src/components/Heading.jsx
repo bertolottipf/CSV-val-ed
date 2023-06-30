@@ -1,5 +1,5 @@
 import * as React from "react";
-import logo from "../Images/CSVValED.png";
+import logo from "../images/CSVValED.png";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/Heading.css';
 import { Link } from "react-router-dom";

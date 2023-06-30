@@ -2,10 +2,10 @@ import './App.css';
 
 import { Routes, Route } from 'react-router-dom';
 
-import Heading from './Components/Heading';
-import Home from './Components/Home';
-import Help from './Components/Help'; 
-import About from './Components/About';
+import Heading from './components/Heading';
+import Home from './components/Home';
+import Help from './components/Help'; 
+import About from './components/About';
 
 function App() {
     return (

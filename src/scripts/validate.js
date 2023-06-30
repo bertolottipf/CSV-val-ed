@@ -2,7 +2,7 @@
 
 /**  scroll to element function **/
 function scrollToElement(count) {
-	selector = ('.error:eq(' + count + ')');
+	var selector = ('.error:eq(' + count + ')');
 
 	//// console.log(count);
 
