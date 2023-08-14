@@ -1,336 +1,9 @@
-
-// import React, { useState, Component } from 'react';
-// // import axios from 'axios';
-// import $ from 'jquery'
-
-// import Validator from './Validator'
-
-// import UploadImageForm from './UploadImageForm'
-// import UploadedImage from './UploadImage'
-
-
-// import 'bootstrap/dist/css/bootstrap.min.css';
-// import './styles/Home.css';
-
-
-
-// function Home() {
-
-
-// 	// gestione lucchetti
-// 	// ...disabilita campi e controlla il carattere |
-// 	function lockEnclosures() {
-// 		$('#lockEnclosures').click(function () {
-// 			$("#valenclosure").val($("#dataenclosure").val());
-// 			$("#valenclosure").prop("disabled", !$("#valenclosure").prop("disabled"));
-
-// 			if ($("#valenclosure").prop("disabled") === true) {
-// 				syncroDelimiterLookFields();
-// 			}
-// 			$('#enclosuresMsg .close').trigger('click');
-
-// 			if ($('#valenclosure').val() === "|") {
-// 				let msg = "if <em>enclosure</em> is <em>\"|\"<em>, the validation may not work.";
-// 				showAlert($("#enclosuresMsg"), msg);
-// 			}
-
-// 		});
-// 	}
-
-// 	// ...disabilita campi e controlla il carattere |
-// 	function lockDelimiters() {
-// 		$('#lockDelimiters').click(function () {
-// 			$("#valdelimiter").val($("#datadelimiter").val());
-// 			$("#valdelimiter").prop("disabled", !$("#valdelimiter").prop("disabled"));
-
-// 			if ($("#valdelimiter").prop("disabled") === true) {
-// 				syncroDelimiterLookFields();
-// 			}
-// 			$('#delimitersMsg .close').trigger('click');
-
-// 			if ($('#valdelimiter').val() === "|") {
-// 				let msg = "if <em>valdelimiter</em> is <em>\"|\"<em>, the validation may not work.";
-// 				showAlert($("#delimitersMsg"), msg);
-// 			}
-
-// 			//lockIconsDelimiters();
-// 		})
-// 	}
-
-// 	// ...sincronizzazione campi enclosures bloccati
-// 	function syncroEnclosuresLookFields() {
-// 		$('#dataenclosure').keyup(function () {
-// 			let isDisabled = $('#valenclosure').is(':disabled')
-// 			if (isDisabled) {
-// 				$('#valenclosure').val($('#dataenclosure').val());
-// 				pipeValEnclosureCheck();
-// 			}
-// 		});
-// 	}
-
-// 	// ...sincronizzazione campi delimiters bloccati
-// 	function syncroDelimiterLookFields() {
-// 		$('#datadelimiter').keyup(function () {
-// 			let isDisabled = $('#valdelimiter').is(':disabled')
-// 			if (isDisabled) {
-// 				$('#valdelimiter').val($('#datadelimiter').val());
-// 				pipeValDelimiterCheck();
-// 			}
-// 		});
-// 	}
-
-// 	// mostro un alert nell'elemento el col messaggio msg
-// 	function showAlert(el, msg) {
-// 		$(el).html('<div class="alert alert-info show"><button type="button" class="close close-alert" data-dismiss="alert" aria-hidden="true"><span aria-hidden="true">&times;</span></button>' + msg + '</div>');
-// 	}
-
-// 	// controllo che valdelimiter non sia | e se lo è mostro un alert
-// 	function pipeValDelimiterCheck() {
-
-// 		$('#datadelimiter').keyup(function () {
-// 			if ($('#datadelimiter').val() === "|" && $('#valdelimiter').is(':disabled')) {
-// 				let msg = "if <em>valdelimiter</em> is <em>\"|\"<em>, the validation may not work.";
-// 				showAlert($("#delimitersMsg"), msg);
-// 			}
-// 		});
-// 		$('#valdelimiter').keyup(function () {
-// 			$('#delimitersMsg .close').trigger('click');
-// 			if ($('#valdelimiter').val() === "|") {
-// 				let msg = "if <em>valdelimiter</em> is <em>\"|\"<em>, the validation may not work.";
-// 				showAlert($("#delimitersMsg"), msg);
-// 			}
-// 		});
-// 	}
-
-// 	// controllo che valenclosure non sia | e se lo è mostro un alert
-// 	function pipeValEnclosureCheck() {
-
-// 		$('#dataenclosure').keyup(function () {
-// 			if ($('#dataenclosure').val() === "|" && $('#valenclosure').is(':disabled')) {
-// 				let msg = "if <em>valenclosure</em> is <em>\"|\"<em>, the validation may not work.";
-// 				showAlert($("#enclosuresMsg"), msg);
-// 			}
-// 		});
-// 		$('#valenclosure').keyup(function () {
-// 			$('#enclosuresMsg .close').trigger('click');
-// 			if ($('#valenclosure').val() === "|") {
-// 				let msg = "if <em>valenclosure</em> is <em>\"|\"<em>, the validation may not work.";
-// 				showAlert($("#enclosuresMsg"), msg);
-// 			}
-// 		});
-// 	}
-
-// 	function setReset() {
-// 		$('input[data-default-readonly]').each(function (index) {
-// 			$(this).prop('disabled', $(this).data('default-readonly'));
-// 		});
-// 		$('[data-default-open]').each(function (index) {
-// 			//// console.log($(this));
-// 			if ($(this).data('default-open')) {
-// 				$(this).find('.bi-unlock-fill').hide();
-// 				$(this).find('.bi-lock-fill').show();
-// 			} else {
-// 				$(this).find('.bi-unlock-fill').show();
-// 				$(this).find('.bi-lock-fill').hide();
-// 			}
-// 		});
-// 		$('.alert .close').trigger("click");
-
-// 	}
-
-// 	lockEnclosures();
-// 	lockDelimiters();
-
-// 	syncroEnclosuresLookFields();
-// 	syncroDelimiterLookFields();
-
-// 	pipeValDelimiterCheck();
-// 	pipeValEnclosureCheck();
-
-// 	const [formValues, setFormValues] = useState({
-// 		csvFile: "",
-// 		valMethod: "file",
-// 		valFile: "",
-// 		//tablestyle: "black",
-// 		dataenclosure: "",
-// 		valenclosure: "",
-// 		datadelimiter: ",",
-// 		valdelimiter: ",",
-// 	});
-
-// 	const [areEnclosuresLocked, setEnclosuresLocked] = useState(false);
-// 	const [areDelimitersLocked, setDelimitersLocked] = useState(false);
-
-// 	const [FormVisible, setFormVisible] = useState(true);
-
-// 	const [uploadedImage, setUploadedImage] = useState();
-
-// 	const handleChange = (e) => {
-// 		const { name, value } = e.target;
-// 		//console.log(e.target.value);
-
-// 		//console.log(name, value);
-
-// 		setFormValues({ ...formValues, [name]: value });
-// 		console.log(JSON.stringify(formValues));
-// 	};
-
-// 	const handleSubmit = (e) => {
-// 		// alert(`csvFile: ${formValues.csvFile}`);
-
-// 		e.preventDefault();
-
-
-// 		console.log(formValues);
-// 		// console.log(inputFileRef?.current?.files);
-// 		setFormVisible(false);
-
-// 	};
-
-// 	const handleGoHome = (e) => {
-// 		setFormVisible(true);
-// 	}
-
-// 	lockEnclosures();
-// 	lockDelimiters();
-
-// 	syncroEnclosuresLookFields();
-// 	syncroDelimiterLookFields();
-
-// 	pipeValDelimiterCheck();
-// 	pipeValEnclosureCheck();
-
-// 	return (
-// 		<>
-// 			{FormVisible ? (
-// 				<>
-// 					<h2>HOME</h2>
-// 					<form onSubmit={handleSubmit} className="text-start">
-
-// 						<div className="row mb-3">
-// 							<label className="col-3">File DATA<sub>(*.csv)</sub><span className="text-danger font-weight-bold">*</span>:</label>
-// 							{/* <input type="file" name="csvFile" id="csvFile" className="col-9" value={formValues.csvFile} onChange={(e) => setFormValues({ csvFile: e.target.files[0].value })} required /> */}
-// 							<input type="file" name="csvFile" id="csvFile" className="col-9" value={formValues.csvFile} onChange={(e) => handleChange(e)} required />
-// 						</div>
-
-
-// 						<div className="row mb-3">
-// 							<label className='col-3'>File VAL<sub>(*.csv)</sub>:</label>
-
-// 							<div id="valFileMethod" className="col-9">
-// 								{/* <input type="file" name="valFile" id="valFile" value={formValues.valFile} onChange={(e) => setFormValues({ valFile: e.target.value })} /> */}
-// 								<input type="file" name="valFile" id="valFile" value={formValues.valFile} onChange={(e) => handleChange(e)} />
-// 								{/* <UploadImageForm
-// 									uploadedImage={uploadedImage}
-// 									setUploadedImage={setUploadedImage}
-// 								/>
-// 								<UploadedImage uploadedImage={uploadedImage} /> */}
-// 							</div>
-
-// 							<input type="hidden" name="valMethod" />
-// 						</div>
-
-
-// 						{/* <div id="table_style_cont" className="row mb-3">
-//                         <label className='col-3'>Table result look</label>
-
-//                         <div className="col-9">
-//                             <input type="radio" name="tablestyle" id="light" value="light" /><label htmlFor="light" style={{ marginRight: "1em" }}>light</label>
-//                             <input type="radio" name="tablestyle" id="dark" value="dark" defaultChecked /><label htmlFor="dark">dark</label>
-//                         </div>
-//                     </div> */}
-
-
-// 						<div className="row">
-
-// 							<div className="mb-3 col-6">
-// 								<label><em>Enclosures</em></label>
-
-// 								<div className="row">
-// 									<label htmlFor="dataenclosure" className="col-3">Data file</label>
-// 									<input type="text" id="dataenclosure" name="dataenclosure" data-original-value="," required="" className="col-2" value={formValues?.dataenclosure} onChange={(e) => handleChange(e)} />
-// 								</div>
-
-// 								<div className="row">
-// 									<label htmlFor="valenclosure" className="col-3">Val file</label>
-// 									<input type="text" id="valenclosure" name="valenclosure" data-original-value="," required="" className="col-2" data-default-readonly="false" disabled={areEnclosuresLocked} value={formValues?.valenclosure} onChange={(e) => handleChange(e)} />
-// 									<div id="lockEnclosures" style={{ fontSize: "2em", marginTop: "-0.75em" }} data-default-open="false" role="button" className="ms-0 ps-0">
-// 										{areEnclosuresLocked ? (
-// 											<i className="bi bi-lock-fill" onClick={() => setEnclosuresLocked(false)}><span className="fs-6">locked</span></i>
-// 										) : (
-// 												<i className="bi bi-unlock-fill ms-1" onClick={() => setEnclosuresLocked(true)}><span className="fs-6">unlocked</span></i>
-// 											)}
-// 									</div>
-// 								</div>
-
-// 								<div id="enclosuresMsg"></div>
-// 							</div>
-
-
-// 							<div className="mb-3 col-6">
-// 								<label><em>Delimiters</em></label>
-
-// 								<div className="row">
-// 									<label htmlFor="datadelimiter" className="col-3">Data file</label>
-// 									<input type="text" id="datadelimiter" name="datadelimiter" data-original-value="," required="" className="col-2" value={formValues.datadelimiter} onChange={(e) => handleChange(e)} />
-// 								</div>
-// 								<div className="row">
-// 									<label htmlFor="valdelimiter" className="col-3">Val file</label>
-// 									<input type="text" id="valdelimiter" name="valdelimiter" data-original-value="," required="" className="col-2" data-default-readonly="false" disabled={areDelimitersLocked} value={formValues.valdelimiter} onChange={(e) => handleChange(e)} />
-// 									<div id="lockDelimiters" style={{ fontSize: "2em", marginTop: "-0.75em" }} data-default-open="false" role="button" className="ms-0 ps-0">
-// 										{areDelimitersLocked ? (
-// 											<>
-// 												<script>console.log(areDelimitersLocked);</script>
-// 												<i className="bi bi-lock-fill" onClick={() => setDelimitersLocked(false)}><span className="fs-6">locked</span></i>
-// 											</>
-// 										) : (
-// 												<>
-// 													<script>console.log(areDelimitersLocked);</script>
-// 													<i className="bi bi-unlock-fill ms-1" onClick={() => setDelimitersLocked(true)}><span className="fs-6">unlocked</span></i>
-// 												</>
-// 											)}
-// 									</div>
-// 								</div>
-
-// 								<div className="row" id="delimitersMsg"></div>
-// 							</div>
-
-// 						</div>
-
-// 						<div className="col-6">
-// 							<input type="submit" value="Validate" name="submit" className="btn btn-primary me-3" />
-// 							<input type="reset" value="Clear" className="resetter btn btn-secondary me-3" onClick={() => { setReset() }} />
-// 						</div>
-// 					</form>
-// 				</>
-// 			) : (
-// 					<Validator data={formValues} goHome={handleGoHome} />
-// 					// <Validator data={formValues} />
-// 				)}
-// 		</>
-// 	);
-
-// }
-
-
-// export default Home;
-
-
-
-
-
-
-
-
-
-
-import React, { useState, useRef, Component } from 'react';
-// // import axios from 'axios';
+import React, { useState } from 'react';
+// import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/Home.css';
-import { saveAs } from 'file-saver';
+// import { saveAs } from 'file-saver';
 import $ from 'jquery';
-import {Buffer} from 'buffer';
 
 const Home = () => {
 	const [csvFile, setCsvFile] = useState(null);
@@ -409,9 +82,10 @@ const Home = () => {
 									type="text"
 									value={dataEnclosure}
 									onChange={(e) => { 
-                                        setDataEnclosure(e.target.value);
-                                        if (areEnclosuresLocked) setValEnclosure(e.target.value);
-                                    }}
+										setDataEnclosure(e.target.value);
+										if (areEnclosuresLocked) setValEnclosure(e.target.value);
+										
+									}}
 									className="col-3"
 								/>
 							</div>
@@ -424,7 +98,7 @@ const Home = () => {
 									value={valEnclosure}
 									onChange={(e) => setValEnclosure(e.target.value)}
 									className="col-3"
-                                    disabled={areEnclosuresLocked}
+									disabled={areEnclosuresLocked}
 								/>
 								<div id="lockEnclosures" style={{ fontSize: "2em",position: "relative", top: "-0.95em" }} data-default-open="false" role="button" className='ms-0 ps-0' >
 								
@@ -449,10 +123,10 @@ const Home = () => {
 									type="text"
 									value={dataDelimiter}
 									// onChange={(e) => setDataDelimiter(e.target.value)}
-                                    onChange={(e) => { 
-                                        setDataDelimiter(e.target.value);
-                                        if (areDelimitersLocked) setValDelimiter(e.target.value);
-                                    }}
+									onChange={(e) => { 
+										setDataDelimiter(e.target.value);
+										if (areDelimitersLocked) setValDelimiter(e.target.value);
+									}}
 									className="col-3"
 								/>
 							</div>
@@ -462,18 +136,18 @@ const Home = () => {
 									type="text"
 									value={valDelimiter}
 									onChange={(e) => { 
-                                        setValDelimiter(e.target.value);
-                                        if (areDelimitersLocked) setValDelimiter(e.target.value);
-                                    }}
+										setValDelimiter(e.target.value);
+										if (areDelimitersLocked) setValDelimiter(e.target.value);
+									}}
 									className="col-3"
-                                    disabled={areDelimitersLocked}
+									disabled={areDelimitersLocked}
 								/>
 								<div id="lockDelimiters" style={{ fontSize: "2em",position: "relative", top: "-0.95em" }} data-default-open="false" role="button" className="ms-0 ps-0">
 									{areDelimitersLocked ? (
 											<i className="bi bi-lock-fill" onClick={() => {setDelimitersLocked(false)}}><span className="fs-6">locked</span></i>
 									) : (
-                                        <i className="bi bi-unlock-fill ms-1" onClick={() => {setDelimitersLocked(true); setValDelimiter(dataDelimiter)}}><span className="fs-6">unlocked</span></i>
-                                    )}
+										<i className="bi bi-unlock-fill ms-1" onClick={() => {setDelimitersLocked(true); setValDelimiter(dataDelimiter)}}><span className="fs-6">unlocked</span></i>
+									)}
 								</div>
 							</div>
 
@@ -503,6 +177,16 @@ const Home = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
 const Validate = ({
 	csvFile,
 	valFile,
@@ -514,24 +198,90 @@ const Validate = ({
 }) => {
 	const [csvData, setCsvData] = useState([]);
 
+	const [valData, setValData] = useState([]);
+
+	/* React.useEffect(() => {
+		if (valFile != "") {
+			scriptVal += getValidator(csvData[colIndex])
+			intestazioni.push(intestazioni, csvData[colIndex])
+		}
+	}, [valFile, valEnclosure]); */
+
+
+	/**
+	 * crea l'array da una stringa csv per i dati
+	 * @param {string} data 
+	 */
 	const parseCSVData = (data) => {
 		const rows = data.split('\n');
 		const parsedData = rows.map((row) => {
 			const cells = row.split(dataDelimiter);
-			return cells.map((cell) => cell.replace(valEnclosure, ''));
+			return cells.map((cell) => cell.split(dataEnclosure).join(""));
 		});
 		setCsvData(parsedData);
+		
 	};
 
+	/**
+	 * crea l'array da una stringa csv per il validatore
+	 * @param {string} data 
+	 */
+	const parseVALData = (data) => {
+		const rows = data.split('\n');
+		const parsedData = rows.map((row) => {
+			const cells = row.split(valDelimiter);
+			return cells.map((cell) => cell.split(valEnclosure).join(""));
+		});
+		setValData(parsedData);
+	};
+
+	/**
+	 * legge i dati dal file dei dati scelto creando un array
+	 */
 	React.useEffect(() => {
 		const reader = new FileReader();
 		reader.onload = (e) => {
 			const content = e.target.result;
 			parseCSVData(content);
+			/* if (valData.length > 0){
+				$(function () {
+					csvData[0].map((item, colIndex) => (
+						getValidator(csvData[0][colIndex])
+					))
+				})
+			} */
 		};
 		reader.readAsText(csvFile);
-	}, [csvFile, dataDelimiter, valEnclosure]);
+	}, [csvFile, dataDelimiter, dataEnclosure]);
 
+	/**
+	 * legge i dati dal file dei validatori scelto creando un array
+	 */
+	React.useEffect(() => {
+		if(valFile) {
+			const reader = new FileReader();
+			reader.onload = (e) => {
+				const content = e.target.result;
+				parseVALData(content);
+				/* if (csvData.length > 0){
+					$(function () {
+						csvData[0].map((item, colIndex) => (
+							getValidator(csvData[0][colIndex])
+						))	
+					})	
+				} */
+			};
+			reader.readAsText(valFile);
+		}
+	}, [valFile, valDelimiter, valEnclosure]);
+
+	/**
+	 * 
+	 * 
+	 * @param {number} rowIndex  la riga su cui si trova il dato
+	 * @param {number} cellIndex  la colonna su cui di trova il dato
+	 * @param {string} value  il dato editato
+	 */
 	const handleCellEdit = (rowIndex, cellIndex, value) => {
 		const updatedData = [...csvData];
 		const rowN = rowIndex + 1;
@@ -539,17 +289,107 @@ const Validate = ({
 		setCsvData(updatedData);
 	};
 
+
+	
+	const getValidator = (nomeCol, numCol) => {
+
+
+		console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+		document.querySelector("#validateScripts").append('// ...');
+
+		valData.forEach((dataVal, index) => {
+
+			// se il nome del campo corrisponde
+			if (dataVal[0] === nomeCol) {
+
+				const opzione = dataVal[1];
+				const dataConfronto = dataVal[3];
+
+				var command = "";
+
+				switch (opzione.toUpperCase()) {
+						
+					case 'L':
+						if (dataVal[2] === "=") {
+							const els = $(`[ data-x='${numCol}' ]`);
+							els.map((el) => (
+								el.attr('data-pattern', `.{${dataConfronto}}`)
+							));
+							command = `$("[ data-x='${numCol}' ]").attr('data-pattern', '.{${dataConfronto}}');\n`;
+						} else if (dataVal[2] === ">") {
+							const els = $(`[ data-x='${numCol}' ]`);
+							els.map((el) => (
+								el.attr('data-pattern', `.{${dataConfronto+1},}`)
+							));
+							command = `$("[ data-x='${numCol}' ]").attr('data-pattern', '.{${dataConfronto+1},}');\n`;
+						} else if (dataVal[2] === ">=") {
+							const els = $(`[ data-x='${numCol}' ]`);
+							els.map((el) => (
+								el.attr('data-pattern', `.{${dataConfronto},}`)
+							));
+							command = `$("[ data-x='${numCol}' ]").attr('data-pattern', '.{${dataConfronto},}');\n`;
+						} else if (dataVal[2] === "<") {
+							const els = $(`[ data-x='${numCol}' ]`);
+							els.map((el) => (
+								el.attr('data-pattern', `.{0, ${dataConfronto-1}}`)
+							));
+							command = `$("[ data-x='${numCol}' ]").attr('data-pattern', '.{0, ${dataConfronto-1}}');\n`;
+						} else if (dataVal[2] === "<=") {
+							const els = $(`[ data-x='${numCol}' ]`);
+							els.map((el) => (
+								el.attr('data-pattern', `.{,${dataConfronto}}`)
+							));
+							command = `$("[ data-x='${numCol}' ]").attr('data-pattern', '.{,${dataConfronto}}');\n`;
+						}
+						break;
+
+					case 'R':
+						command = `$("[ data-x='${numCol}' ]").attr('data-pattern', '${dataConfronto}');\n`;
+						break;
+
+					case 'RI':
+						command = `$("[ data-x='${numCol}' ]").attr('data-pattern', '${dataConfronto}');\n`;
+						command += `$("[ data-x='${numCol}' ]").attr('data-ignorecase', 'true');\n`;
+						break;
+
+					case 'S':
+						command = `$("[ data-x='${numCol}' ]").attr('data-pattern', '(${dataConfronto})');\n`;
+						break;
+
+					case 'SI':
+						command = `$("[ data-x='${numCol}' ]").attr('data-pattern', '(${dataConfronto})');\n`;
+						command += `$("[ data-x='${numCol}' ]").attr('data-ignorecase', 'true');\n`;
+						break;
+
+					case 'U':
+						command = `$("[ data-x='${numCol}' ]").attr('data-pattern', '(${dataConfronto})');\n`;
+						break;
+
+					case 'UI':
+						command = `$("[ data-x='${numCol}' ]").attr('data-pattern', '(${dataConfronto})');\n`;
+						command += `$("[ data-x='${numCol}' ]").attr('data-ignorecase', 'true');\n`;
+						break;
+				}
+
+				
+				//console.log( "!!! " , command , " !!!" );
+				document.querySelector("#validateScripts").append(command);
+				return command;
+			}
+		});
+	}
+
+
 	return (
 		<div>
-			<table className="table table-striped table-responsive">
-				<thead>
+			{<table className="table table-striped table-responsive">
+				{<thead>
 					<tr>
-						{csvData.length > 0 &&
-							csvData[0].map((item, index) => (
-								<th key={index}>{item}</th>
-							))}
+						{csvData.length > 0 && csvData[0].map((item, colIndex) => (
+							<th key={colIndex}>{item}</th>
+						))}
 					</tr>
-				</thead>
+				</thead>}
 				<tbody>
 					{csvData.slice(1).map((row, rowIndex) => (
 						<tr key={rowIndex} className={rowIndex % 2 === 0 ? 'even-row' : 'odd-row'}>
@@ -561,6 +401,8 @@ const Validate = ({
 									onBlur={(e) =>
 										handleCellEdit(rowIndex, cellIndex, e.target.textContent)
 									}
+									data-x={rowIndex}
+									data-y={cellIndex}
 								>
 									{item}
 								</td>
@@ -568,146 +410,27 @@ const Validate = ({
 						</tr>
 					))}
 				</tbody>
-			</table>
+			</table>}
+			<br />
 			<button onClick={onReset}>Back</button>
+
+			<script id="validateScripts">
+				{$(function () {
+					/*
+						TODO:aggiuntare!!! Va in errore
+						csvData.length > 0 && csvData[0].forEach((item, colIndex) => {
+							getValidator(item.replace("\r", ''), colIndex)
+						})
+						
+					*/
+					
+				})}
+			</script>			
 		</div>
 	);
+
 };
 
-/*
-
-
-// gestione lucchetti
-	// ...disabilita campi e controlla il carattere |
-	function lockEnclosures() {
-		$('#lockEnclosures').click(function () {
-			$("#valenclosure").val($("#dataenclosure").val());
-			$("#valenclosure").prop("disabled", !$("#valenclosure").prop("disabled"));
-
-			if ($("#valenclosure").prop("disabled") === true) {
-				syncroDelimiterLookFields();
-			}
-			$('#enclosuresMsg .close').trigger('click');
-
-			if ($('#valenclosure').val() === "|") {
-				let msg = "if <em>enclosure</em> is <em>\"|\"<em>, the validation may not work.";
-				showAlert($("#enclosuresMsg"), msg);
-			}
-
-		});
-	}
-
-	// ...disabilita campi e controlla il carattere |
-	function lockDelimiters() {
-		$('#lockDelimiters').click(function () {
-			$("#valdelimiter").val($("#datadelimiter").val());
-			$("#valdelimiter").prop("disabled", !$("#valdelimiter").prop("disabled"));
-
-			if ($("#valdelimiter").prop("disabled") === true) {
-				syncroDelimiterLookFields();
-			}
-			$('#delimitersMsg .close').trigger('click');
-
-			if ($('#valdelimiter').val() === "|") {
-				let msg = "if <em>valdelimiter</em> is <em>\"|\"<em>, the validation may not work.";
-				showAlert($("#delimitersMsg"), msg);
-			}
-
-			//lockIconsDelimiters();
-		})
-	}
-
-	// ...sincronizzazione campi enclosures bloccati
-	function syncroEnclosuresLookFields() {
-		$('#dataenclosure').keyup(function () {
-			let isDisabled = $('#valenclosure').is(':disabled')
-			if (isDisabled) {
-				$('#valenclosure').val($('#dataenclosure').val());
-				pipeValEnclosureCheck();
-			}
-		});
-	}
-
-	// ...sincronizzazione campi delimiters bloccati
-	function syncroDelimiterLookFields() {
-		$('#datadelimiter').keyup(function () {
-			let isDisabled = $('#valdelimiter').is(':disabled')
-			if (isDisabled) {
-				$('#valdelimiter').val($('#datadelimiter').val());
-				pipeValDelimiterCheck();
-			}
-		});
-	}
-
-	// mostro un alert nell'elemento el col messaggio msg
-	function showAlert(el, msg) {
-		$(el).html('<div class="alert alert-info show"><button type="button" class="close close-alert" data-dismiss="alert" aria-hidden="true"><span aria-hidden="true">&times;</span></button>' + msg + '</div>');
-	}
-
-	// controllo che valdelimiter non sia | e se lo è mostro un alert
-	function pipeValDelimiterCheck() {
-
-		$('#datadelimiter').keyup(function () {
-			if ($('#datadelimiter').val() === "|" && $('#valdelimiter').is(':disabled')) {
-				let msg = "if <em>valdelimiter</em> is <em>\"|\"<em>, the validation may not work.";
-				showAlert($("#delimitersMsg"), msg);
-			}
-		});
-		$('#valdelimiter').keyup(function () {
-			$('#delimitersMsg .close').trigger('click');
-			if ($('#valdelimiter').val() === "|") {
-				let msg = "if <em>valdelimiter</em> is <em>\"|\"<em>, the validation may not work.";
-				showAlert($("#delimitersMsg"), msg);
-			}
-		});
-	}
-
-	// controllo che valenclosure non sia | e se lo è mostro un alert
-	function pipeValEnclosureCheck() {
-
-		$('#dataenclosure').keyup(function () {
-			if ($('#dataenclosure').val() === "|" && $('#valenclosure').is(':disabled')) {
-				let msg = "if <em>valenclosure</em> is <em>\"|\"<em>, the validation may not work.";
-				showAlert($("#enclosuresMsg"), msg);
-			}
-		});
-		$('#valenclosure').keyup(function () {
-			$('#enclosuresMsg .close').trigger('click');
-			if ($('#valenclosure').val() === "|") {
-				let msg = "if <em>valenclosure</em> is <em>\"|\"<em>, the validation may not work.";
-				showAlert($("#enclosuresMsg"), msg);
-			}
-		});
-	}
-
-	function setReset() {
-		$('input[data-default-readonly]').each(function (index) {
-			$(this).prop('disabled', $(this).data('default-readonly'));
-		});
-		$('[data-default-open]').each(function (index) {
-			//// console.log($(this));
-			if ($(this).data('default-open')) {
-				$(this).find('.bi-unlock-fill').hide();
-				$(this).find('.bi-lock-fill').show();
-			} else {
-				$(this).find('.bi-unlock-fill').show();
-				$(this).find('.bi-lock-fill').hide();
-			}
-		});
-		$('.alert .close').trigger("click");
-
-	}
-
-	lockEnclosures();
-	lockDelimiters();
-
-	syncroEnclosuresLookFields();
-	syncroDelimiterLookFields();
-
-	pipeValDelimiterCheck();
-	pipeValEnclosureCheck();
-
-*/
-
-
 export default Home;
+
+
