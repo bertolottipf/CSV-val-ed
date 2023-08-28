@@ -9,6 +9,7 @@ fieldset {
 #lockEnclosures, #lockDelimiters {
 	margin-left: 0.3em;
 	width: fit-content;
+	height: auto;
 }
 
 
