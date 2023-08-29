@@ -1,9 +1,3 @@
-
-
-
-
-
-
 import React, { useState } from 'react';
 // import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -11,6 +5,22 @@ import './styles/Home.css';
 // import { saveAs } from 'file-saver';
 import $ from 'jquery';
 import {Buffer} from 'buffer';
+
+
+
+
+
+
+
+
+
+const uploadFilesToServer = (csvFile, valFile) => {
+	// TODO: Implement your server-side file upload logic here
+	console.log('Uploading files to server:', csvFile, valFile);
+};
+
+
+
 
 const Home = () => {
 	const [csvFile, setCsvFile] = useState(null);
@@ -24,6 +34,8 @@ const Home = () => {
 	const [areEnclosuresLocked, setEnclosuresLocked] = useState(true);
 	const [areDelimitersLocked, setDelimitersLocked] = useState(true);
 
+
+
 	const handleFormSubmit = (e) => {
 		e.preventDefault();
 
@@ -34,6 +46,8 @@ const Home = () => {
 		setShowResults(true);
 	};
 
+
+	
 	const handleReset = () => {
 		setCsvFile(Buffer.from("", "base64"));
 		setValFile(Buffer.from("", "base64"));
@@ -47,10 +61,7 @@ const Home = () => {
 		setDelimitersLocked(true);
 	};
 
-	const uploadFilesToServer = (csvFile, valFile) => {
-		// TODO: Implement your server-side file upload logic here
-		console.log('Uploading files to server:', csvFile, valFile);
-	};
+	
 
 	return (
 		<div>
@@ -87,6 +98,7 @@ const Home = () => {
 								<label htmlFor="dataenclosure" className="col-4">Data File Enclosures:</label>
 								<input
 									type="text"
+									id="dataenclosure"
 									value={dataEnclosure}
 									onChange={(e) => { 
                                         setDataEnclosure(e.target.value);
@@ -101,6 +113,7 @@ const Home = () => {
 								<label htmlFor="valenclosure" className="col-4">Validation File Enclosures:</label>
 								<input
 									type="text"
+									id="valenclosure"
 									value={valEnclosure}
 									onChange={(e) => setValEnclosure(e.target.value)}
 									className="col-3"
@@ -126,6 +139,7 @@ const Home = () => {
 								<label htmlFor="datadelimiter" className="col-4">Data File Delimiters:</label>
 								<input
 									type="text"
+									id="datadelimiter"
 									value={dataDelimiter}
                                     onChange={(e) => { 
                                         setDataDelimiter(e.target.value);
@@ -138,6 +152,7 @@ const Home = () => {
 								<label htmlFor="valdelimiter" className="col-4">Validation File Delimiters:</label>
 								<input
 									type="text"
+									id="valdelimiter"
 									value={valDelimiter}
 									onChange={(e) => { 
                                         setValDelimiter(e.target.value);
@@ -192,14 +207,10 @@ const Validate = ({
 }) => {
 	const [csvData, setCsvData] = useState([]);
 
-	const parseCSVData = (data) => {
-		const rows = data.split('\n');
-		const parsedData = rows.map((row) => {
-			const cells = row.split(dataDelimiter);
-			return cells.map((cell) => cell.replace(valEnclosure, ''));
-		});
-		setCsvData(parsedData);
-	};
+	const [valData, setValData] = useState([]);
+
+
+	var vals = [];
 
 	React.useEffect(() => {
 		const reader = new FileReader();
@@ -208,7 +219,42 @@ const Validate = ({
 			parseCSVData(content);
 		};
 		reader.readAsText(csvFile);
-	}, [csvFile, dataDelimiter, valEnclosure]);
+	}, [csvFile, dataDelimiter, dataEnclosure]);
+
+	React.useEffect(() => {
+		if (valData?.length > 0) {
+			
+			const reader = new FileReader();
+			reader.onload = (e) => {
+				const content = e.target.result;
+				parseValData(content);
+			};
+			reader.readAsText(valFile);
+
+		}
+	}, [valFile, valDelimiter, valEnclosure]);
+
+
+	const parseCSVData = (data) => {
+		const rows = data.split('\n');
+		const parsedData = rows.map((row) => {
+			const cells = row.split(dataDelimiter);
+			return cells.map((cell) => cell.replace(dataEnclosure, ''));
+		});
+		setCsvData(parsedData);
+	};
+
+	const parseValData = (data) => {
+		const rows = data.split('\n');
+		const parsedData = rows.map((row) => {
+			const cells = row.split(valDelimiter);
+			return cells.map((cell) => cell.replace(valEnclosure, ''));
+		});
+		setValData(parsedData);
+
+		
+	};
+
 
 	const handleCellEdit = (rowIndex, cellIndex, value) => {
 		const updatedData = [...csvData];
@@ -216,6 +262,7 @@ const Validate = ({
 		updatedData[rowN][cellIndex] = value;
 		setCsvData(updatedData);
 	};
+
 
 	return (
 		<div>
@@ -248,6 +295,9 @@ const Validate = ({
 				</tbody>
 			</table>
 			<button onClick={onReset}>Back</button>
+			<script>
+				console.log(JSON.stringify(valData));
+			</script>
 		</div>
 	);
 };
