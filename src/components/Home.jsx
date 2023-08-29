@@ -69,9 +69,10 @@ const Home = () => {
 				<form onSubmit={handleFormSubmit}>
 
 					<div className="row mb-3">
-						<label className="col-3">CSV File:</label>
+						<label htmlFor="csvFile" className="col-3">CSV File:</label>
 						<input
 							type="file"
+							id="csvFile"
 							accept=".csv"
 							onChange={(e) => setCsvFile(e.target.files[0])}
 							required
@@ -80,8 +81,9 @@ const Home = () => {
 					</div>
 
 					<div className="row mb-3">
-						<label className="col-3">Validation File:</label>
+						<label htmlFor="valFile" className="col-3">Validation File:</label>
 						<input
+							id="valFile"
 							type="file"
 							accept=".csv"
 							onChange={(e) => setValFile(e.target.files[0])}
