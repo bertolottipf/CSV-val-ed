@@ -214,6 +214,26 @@ const Validate = ({
 
 	var vals = [];
 
+
+	const parseCSVData = (data) => {
+		const rows = data.split('\n');
+		const parsedData = rows.map((row) => {
+			const cells = row.split(dataDelimiter);
+			return cells.map((cell) => cell.replace(dataEnclosure, '').replace('\r', ''));
+		});
+		setCsvData(parsedData);
+	};
+
+	const parseValData = (data) => {
+		const rows = data.split('\n');
+		const parsedData = rows.map((row) => {
+			const cells = row.split(valDelimiter);
+			return cells.map((cell) => cell.replace(valEnclosure, '').replace('\r', ''));
+		});
+		setValData(parsedData);
+	};
+
+
 	React.useEffect(() => {
 		const reader = new FileReader();
 		reader.onload = (e) => {
@@ -224,38 +244,15 @@ const Validate = ({
 	}, [csvFile, dataDelimiter, dataEnclosure]);
 
 	React.useEffect(() => {
-		if (valData?.length > 0) {
-			
+		if (valFile) {
 			const reader = new FileReader();
 			reader.onload = (e) => {
 				const content = e.target.result;
 				parseValData(content);
 			};
 			reader.readAsText(valFile);
-
-		}
+		} 
 	}, [valFile, valDelimiter, valEnclosure]);
-
-
-	const parseCSVData = (data) => {
-		const rows = data.split('\n');
-		const parsedData = rows.map((row) => {
-			const cells = row.split(dataDelimiter);
-			return cells.map((cell) => cell.replace(dataEnclosure, ''));
-		});
-		setCsvData(parsedData);
-	};
-
-	const parseValData = (data) => {
-		const rows = data.split('\n');
-		const parsedData = rows.map((row) => {
-			const cells = row.split(valDelimiter);
-			return cells.map((cell) => cell.replace(valEnclosure, ''));
-		});
-		setValData(parsedData);
-
-		
-	};
 
 
 	const handleCellEdit = (rowIndex, cellIndex, value) => {
@@ -266,11 +263,36 @@ const Validate = ({
 	};
 
 
+	const getValidator = (a) => {
+		
+
+
+
+
+		return ` data-fff='${a}' `
+	}
+
+
+	const getValScript = () => {
+
+		const cont = document.getElementById('valScript');
+
+		return (
+			<script id="valScript">
+				{valData.forEach((valItem) => {
+					cont.append(getValidator(valItem))
+				})}
+			</script>
+		)
+	}
+
+
 	return (
 		<div>
 			<table className="table table-striped table-responsive">
 				<thead>
 					<tr>
+						<th>#</th>
 						{csvData.length > 0 &&
 							csvData[0].map((item, index) => (
 								<th key={index}>{item}</th>
@@ -280,6 +302,9 @@ const Validate = ({
 				<tbody>
 					{csvData.slice(1).map((row, rowIndex) => (
 						<tr key={rowIndex} className={rowIndex % 2 === 0 ? 'even-row' : 'odd-row'}>
+							<td key={rowIndex}>
+								{2+rowIndex}
+							</td>
 							{row.map((item, cellIndex) => (
 								<td
 									key={cellIndex}
@@ -297,9 +322,7 @@ const Validate = ({
 				</tbody>
 			</table>
 			<button onClick={onReset}>Back</button>
-			<script>
-				console.log(JSON.stringify(valData));
-			</script>
+			{getValScript()}
 		</div>
 	);
 };
