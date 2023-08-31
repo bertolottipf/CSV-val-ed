@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 // import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './styles/Home.css';
 // import { saveAs } from 'file-saver';
 import $ from 'jquery';
 import {Buffer} from 'buffer';
 
-
-
+import Validate from './Validate';
+import './styles/Home.css';
 
 
 
@@ -18,7 +17,6 @@ const uploadFilesToServer = (csvFile, valFile) => {
 	// TODO: Implement your server-side file upload logic here
 	console.log('Uploading files to server:', csvFile, valFile);
 };
-
 
 
 
@@ -198,134 +196,7 @@ const Home = () => {
 
 
 
-const Validate = ({
-	csvFile,
-	valFile,
-	dataEnclosure,
-	dataDelimiter,
-	valEnclosure,
-	valDelimiter,
-	onReset,
-}) => {
-	const [csvData, setCsvData] = useState([]);
 
-	const [valData, setValData] = useState([]);
-
-
-	var vals = [];
-
-
-	const parseCSVData = (data) => {
-		const rows = data.split('\n');
-		const parsedData = rows.map((row) => {
-			const cells = row.split(dataDelimiter);
-			return cells.map((cell) => cell.replace(dataEnclosure, '').replace('\r', ''));
-		});
-		setCsvData(parsedData);
-	};
-
-	const parseValData = (data) => {
-		const rows = data.split('\n');
-		const parsedData = rows.map((row) => {
-			const cells = row.split(valDelimiter);
-			return cells.map((cell) => cell.replace(valEnclosure, '').replace('\r', ''));
-		});
-		setValData(parsedData);
-	};
-
-
-	React.useEffect(() => {
-		const reader = new FileReader();
-		reader.onload = (e) => {
-			const content = e.target.result;
-			parseCSVData(content);
-		};
-		reader.readAsText(csvFile);
-	}, [csvFile, dataDelimiter, dataEnclosure]);
-
-	React.useEffect(() => {
-		if (valFile) {
-			const reader = new FileReader();
-			reader.onload = (e) => {
-				const content = e.target.result;
-				parseValData(content);
-			};
-			reader.readAsText(valFile);
-		} 
-	}, [valFile, valDelimiter, valEnclosure]);
-
-
-	const handleCellEdit = (rowIndex, cellIndex, value) => {
-		const updatedData = [...csvData];
-		const rowN = rowIndex + 1;
-		updatedData[rowN][cellIndex] = value;
-		setCsvData(updatedData);
-	};
-
-
-	const getValidator = (a) => {
-		
-
-
-
-
-		return ` data-fff='${a}' `
-	}
-
-
-	const getValScript = () => {
-
-		const cont = document.getElementById('valScript');
-
-		return (
-			<script id="valScript">
-				{valData.forEach((valItem) => {
-					cont.append(getValidator(valItem))
-				})}
-			</script>
-		)
-	}
-
-
-	return (
-		<div>
-			<table className="table table-striped table-responsive">
-				<thead>
-					<tr>
-						<th>#</th>
-						{csvData.length > 0 &&
-							csvData[0].map((item, index) => (
-								<th key={index}>{item}</th>
-							))}
-					</tr>
-				</thead>
-				<tbody>
-					{csvData.slice(1).map((row, rowIndex) => (
-						<tr key={rowIndex} className={rowIndex % 2 === 0 ? 'even-row' : 'odd-row'}>
-							<td key={rowIndex}>
-								{2+rowIndex}
-							</td>
-							{row.map((item, cellIndex) => (
-								<td
-									key={cellIndex}
-									contentEditable
-									suppressContentEditableWarning
-									onBlur={(e) =>
-										handleCellEdit(rowIndex, cellIndex, e.target.textContent)
-									}
-								>
-									{item}
-								</td>
-							))}
-						</tr>
-					))}
-				</tbody>
-			</table>
-			<button onClick={onReset}>Back</button>
-			{getValScript()}
-		</div>
-	);
-};
 
 /*
 
