@@ -24,7 +24,7 @@ function Help() {
 				<code>
 					"name","L","&lt;","10"<br />
 					"surname","L","&gt;","10"<br />
-					"age","R","","\\d{1, 3}"<br />
+					"age","R","","\\d&#123;1, 3&#125;"<br />
 					"sex","SI","","F|M"<br />
 					"programmer","U","","bertolottipf"
 				</code>
