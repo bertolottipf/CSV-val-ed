@@ -1,4 +1,9 @@
 {
+	"//": [
+		"A sample react.js project to validate CSV",
+		"Uses nodemon for development",
+		"Issue npm run dev to start your development server"
+	],
 	"name": "csvvaled",
 	"version": "0.1.0",
 	"private": true,

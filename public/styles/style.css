@@ -1,4 +1,4 @@
-/* * { 
+* { 
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
@@ -49,8 +49,8 @@ fieldset {
 	margin-bottom: 3em;
 }
 
-input[type=file], /* FF, IE7+, chrome (except button) * /
-input[type=file]::-webkit-file-upload-button { /* chromes and blink button * /
+input[type=file], /* FF, IE7+, chrome (except button) */
+input[type=file]::-webkit-file-upload-button { /* chromes and blink button */
 	cursor: pointer; 
 }
 
@@ -170,4 +170,3 @@ ul {
 .font-weight-bold {
 	font-weight: 700;
 }
-*/

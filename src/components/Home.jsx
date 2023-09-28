@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 // import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 // import { saveAs } from 'file-saver';
-import $ from 'jquery';
 import {Buffer} from 'buffer';
 
 import Validate from './Validate';
@@ -15,7 +14,7 @@ import './styles/Home.css';
 
 const uploadFilesToServer = (csvFile, valFile) => {
 	// TODO: Implement your server-side file upload logic here
-	console.log('Uploading files to server:', csvFile, valFile);
+	console.log('Uploading files to server:', csvFile.name, " & ", valFile?.name);
 };
 
 
@@ -47,8 +46,10 @@ const Home = () => {
 
 	
 	const handleReset = () => {
-		setCsvFile(Buffer.from("", "base64"));
-		setValFile(Buffer.from("", "base64"));
+		// setCsvFile(Buffer.from("", "base64"));
+		// setValFile(Buffer.from("", "base64"));
+		setCsvFile(new Blob());
+		setValFile(new Blob());
 		setDataEnclosure('');
 		setValEnclosure('');
 		setDataDelimiter(',');
