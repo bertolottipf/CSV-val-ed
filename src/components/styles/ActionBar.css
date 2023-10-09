@@ -1,0 +1,26 @@
+
+#exports {
+	position: fixed;
+	bottom: 4em;
+	right: 1em;
+}
+
+#errors {
+	position: fixed;
+	bottom: 4em;
+	left: 1em;
+	min-width: max-content
+}
+
+#errorsNavigation {
+	display: inline-block;
+	margin-left: 0.3em
+}
+
+#actionButtons {
+	background-color: #000000aa;
+	position: fixed;
+	bottom: 0em;
+	width: 100%;
+	height: 4em;
+}

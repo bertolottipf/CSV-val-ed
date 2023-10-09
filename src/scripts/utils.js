@@ -5,7 +5,7 @@ function incrementN(arr, number, end) {
 		number++;
 		incrementN(arr, number, end);
 	} else {
-		
+
 	}
 }
 // incrementN(numbers, 0, 9);
@@ -35,7 +35,7 @@ function getSquareRange(arr, xStart, yStart, xEnd, yEnd) {
 		//// console.log(`xStart: ${xStart}, yStart: ${yStart}`);
 		//// console.log(`xEnd: ${xEnd}, yEnd: ${yEnd}`);
 	}
-	
+
 	// evito che vengano prese in considerazione le celle a sinistra della colonna interessata
 	if (xStart >= xStartOrig  && yStart <= yEnd && xStart <= xEnd) {
 		arr.push([xStart, yStart]);
@@ -55,4 +55,3 @@ function getSquareRange(arr, xStart, yStart, xEnd, yEnd) {
 }
 //// getSquareRange(range, 1, 1, 3, 3);
 //// console.log(range);
- 

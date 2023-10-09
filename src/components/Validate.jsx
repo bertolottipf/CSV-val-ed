@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import $ from "jquery"
 
-import './styles/Home.css';
+import './styles/Validate.css';
 
-//import ValScript from "./ValScript";
+import ActionBar from './ActionBar'
+
 
 
 const Validate = ({
@@ -16,26 +17,26 @@ const Validate = ({
 	onReset,
 }) => {
 
-
 	function scrollToElement(count) {
 		var selector = ('.error:eq(' + count + ')');
-	
+
 		//// console.log(count);
-	
+
 		$('html, body').animate({
 			scrollTop: $(selector).offset().top
 		}, 1000);
-	
+
 		$(`.error:eq(${count})`).focus();
 	}
-	
+
+
 	function validate(x = undefined, y = undefined) {
-		
+
 		var thisCellOnly = "";
 		if (x !== undefined && y !== undefined) {
 			thisCellOnly = `[data-x=${x}][data-y=${y}]`;
 		}
-	
+
 		$("tbody td" + thisCellOnly).each(function () {
 			const pattern = $(this).data("pattern");
 			const ignoreCase = $(this).data('ignorecase') === undefined ? false : $(this).data('ignorecase');
@@ -46,20 +47,20 @@ const Validate = ({
 			} else {
 				re = new RegExp("^" + pattern + "$");
 			}
-	
+
 			//alert(re.test(string));
 			if (!re.test(string) && pattern !== undefined) {
 				$(this).addClass("error");
 			} else {
 				$(this).removeClass("error");
 			}
-	
+
 			$('#nErrors').html($('.error').length);
 		})
-		
+
 	}
-	
-	
+
+
 	/**document ready**/
 	$(function () {
 		// var count = 0;
@@ -115,7 +116,7 @@ const Validate = ({
 		const rows = data.split('\n');
 		const parsedData = rows.map((row) => {
 			const cells = row.split(dataDelimiter);
-			return cells.map((cell) => cell.replace(dataEnclosure, '')?.replace('\r', ''));
+			return cells.map((cell) => cell.replaceAll(dataEnclosure, '')?.replace('\r', ''));
 		});
 		setCsvData(parsedData);
 		return parsedData;
@@ -125,7 +126,7 @@ const Validate = ({
 		const rows = data.split('\n');
 		const parsedData = rows.map((row) => {
 			const cells = row.split(valDelimiter);
-			return cells.map((cell) => cell.replace(valEnclosure, '')?.replace('\r', ''));
+			return cells.map((cell) => cell.replaceAll(valEnclosure, '')?.replace('\r', ''));
 		});
 		setValData(parsedData);
 		return parsedData;
@@ -156,7 +157,7 @@ const Validate = ({
 			const content = e.target.result;
 			parseValData(content);
 		};
-		console.log(valFile)
+		console.log(valFile);
 		if (valFile) {
 			reader.readAsText(valFile);
 		}
@@ -176,7 +177,7 @@ const Validate = ({
 		}
 	}, [csvData, valData]);
 
-	
+
 
 
 	const handleCellEdit = (rowIndex, cellIndex, value) => {
@@ -184,22 +185,22 @@ const Validate = ({
 		csvData[rowIndex + 1][cellIndex] = value;
 		setCsvData(csvData);
 	};
-	
+
 
 	const getValidator = () => {
 
 		var commands = '';
 		var command= '';
-		
+
 		//! per tutte le intestazioni del csv
 		csvData[0]?.forEach((csvColumnName, csvColumnIndex) => {
-			
+
 			//! per tutte le linee del validatore
 			valData.forEach(valEl => {
-				
+
 				const option = valEl[1]?.toUpperCase();
-				const dataConfronto = parseInt(valEl[3])
-				
+				const dataConfronto = valEl[3];
+
 				if (valEl[0] === csvColumnName) {
 					// eslint-disable-next-line default-case
 					switch (typeof option === "string" && option) {
@@ -217,7 +218,7 @@ const Validate = ({
 								command = `$("[ data-x='${csvColumnIndex}' ]").attr('data-pattern', '.{0,${dataConfronto}}');\n`;
 							}
 							break;
-							
+
 						case 'R':
 							command = `$("[ data-x='${csvColumnIndex}' ]").attr('data-pattern', '${dataConfronto}');\n`;
 							break;
@@ -225,7 +226,7 @@ const Validate = ({
 							command = `$("[ data-x='${csvColumnIndex}' ]").attr('data-pattern', '${dataConfronto}');\n`;
 							command += `$("[ data-x='${csvColumnIndex}' ]").attr('data-ignorecase', 'true');\n`;
 							break;
-							
+
 						case 'S':
 							command = `$("[ data-x='${csvColumnIndex}' ]").attr('data-pattern', '(${dataConfronto})');\n`;
 							break;
@@ -233,7 +234,7 @@ const Validate = ({
 							command = `$("[ data-x='${csvColumnIndex}' ]").attr('data-pattern', '(${dataConfronto})');\n`;
 							command += `$("[ data-x='${csvColumnIndex}' ]").attr('data-ignorecase', 'true');\n`;
 							break;
-							
+
 						case 'U':
 							command = `$("[ data-x='${csvColumnIndex}' ]").attr('data-pattern', '(${dataConfronto})');\n`;
 							break;
@@ -242,7 +243,7 @@ const Validate = ({
 							command += `$("[ data-x='${csvColumnIndex}' ]").attr('data-ignorecase', 'true');\n`;
 							break;
 					}
-
+					console.log(command)
 					commands += command;
 				}
 				console.log(commands)
@@ -260,7 +261,7 @@ const Validate = ({
 
 	return (
 		<div>
-			
+
 			<table className="table table-striped table-responsive">
 				<thead>
 					<tr>
@@ -296,7 +297,8 @@ const Validate = ({
 				</tbody>
 			</table>
 			<button onClick={onReset}>Back</button>
-			{/*<ValScript csvData={csvData} valData={valData} />*/}
+
+			<ActionBar></ActionBar>
 		</div>
 	);
 };

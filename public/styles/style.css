@@ -1,4 +1,4 @@
-* { 
+* {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
@@ -19,10 +19,10 @@ body { min-height: 100vh; }
 
 
 
-td.error, 
+td.error,
 th.error {
-	background: #ff0000 !important; 
-	--bs-table-accent-bg: #ff0000 !important; 
+	background: #ff0000 !important;
+	--bs-table-accent-bg: #ff0000 !important;
 }
 
 
@@ -51,7 +51,7 @@ fieldset {
 
 input[type=file], /* FF, IE7+, chrome (except button) */
 input[type=file]::-webkit-file-upload-button { /* chromes and blink button */
-	cursor: pointer; 
+	cursor: pointer;
 }
 
 
@@ -63,7 +63,7 @@ input[type=file]::-webkit-file-upload-button { /* chromes and blink button */
 	10% { opacity: 1; }
 	15% { opacity: 0; }
 	100% { opacity: 0; }
-} 
+}
 
 
 #sponsorsimg #layer1 {
@@ -98,7 +98,7 @@ input[type=file]::-webkit-file-upload-button { /* chromes and blink button */
 
 
 th {
-	content:”\00A3″; font-family: “Font Awesome 5 Free“; font-weight: 900; 
+	content:”\00A3″; font-family: “Font Awesome 5 Free“; font-weight: 900;
 }
 
 

@@ -5,7 +5,7 @@ $(document).ready(function () {
 
 	// disable right click and show custom context menu
 	$("div").on('contextmenu', '.divRightClick', function (e) {
-		
+
 		place = $(e.target);
 		idPlace = $(e.target).attr('data-id') == null ? $(e.target).parent().attr('data-id') : $(e.target).attr('data-id');
 		//// console.log( idPlace );
@@ -67,7 +67,7 @@ $(document).ready(function () {
 				GUI.showEditRowModal(contextMenuPositionCol, contextMenuPositionRow);
 			}
 		}
-		
+
 		$("#context-menu").hide();
 	});
 

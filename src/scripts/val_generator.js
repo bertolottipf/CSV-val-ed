@@ -1,9 +1,9 @@
 class Column {
 	static columns = [];
 
-	constructor(name = "", 
-			position = Column.columns.length, 
-			regexs = [], 
+	constructor(name = "",
+			position = Column.columns.length,
+			regexs = [],
 			is_deleted = false) {
 		this.name = name;
 		this.position = position;
@@ -96,7 +96,7 @@ class Row {
 	static getAll(col_n) {
 		return Column.columns[col_n].regexs;
 	}
-	
+
 }
 
 
@@ -198,7 +198,7 @@ class GUI {
 		$('#col_position').val(null);
 
 		//// console.log(JSON.stringify( Column.getAll(),null,'\t' ));
-		
+
 	}
 
 	// pulsante della modale di "annulla" inserisci/modifica colonna
@@ -220,7 +220,7 @@ class GUI {
 		//// console.log("delete col");
 		//// alert('position: ' + position);
 		//Column.columns.splice(position, 1);
-		
+
 		Column.delete(position);
 		$("table#validators tbody tr").find(`td[data-id=column-${position}]`).addClass('d-none');
 		//// console.log(JSON.stringify(Column.columns, null, '\t'));
@@ -332,7 +332,7 @@ class GUI {
 		const data = HtmlEncode($('#col_val_data').val());
 		const is_deleted = false;
 		//// console.log(JSON.stringify(Column.columns,null,'\t'));
-		
+
 		// se non è definita la riga inserisco nell'array altrimenti modifico
 		if (n_row == null) {
 			const row_data_id = $(`.column_validators_tab:eq(${n_col}) .rowdate:last`).data('id');
@@ -357,7 +357,7 @@ class GUI {
 
 		// nascondo la modale e la ripulisco
 		$('#modalAddColumnValidator').modal('hide');
-		
+
 		$('#col_val_type').val('');
 		$('#col_val_comparison').val('');
 		$('#col_val_data').val('');
@@ -372,7 +372,7 @@ class GUI {
 		});
 	}
 
-	
+
 	// pulsante della modale di modifica riga
 	static confirmEditRow() {
 		$('#save_col_val_act').click(function () {
@@ -404,12 +404,12 @@ class GUI {
 
 
 	static deleteRow(positionCol, positionRow) {
-		//// console.log('delete row ' + positionRow);	
+		//// console.log('delete row ' + positionRow);
 		//// alert(positionCol + "-" + positionRow);
 		//// console.log(   JSON.stringify(Column.getAll()[positionCol].regexs[positionRow], null, '\t')   )
 		try {
 			Row.delete(positionCol, positionRow);
-			$(`.column_validators_tab:eq(${positionCol}) tr[data-id=row-${positionRow}]`).addClass('d-none');			
+			$(`.column_validators_tab:eq(${positionCol}) tr[data-id=row-${positionRow}]`).addClass('d-none');
 		} catch (error) {
 			$(`table#spreadsheet tr td[data-id=row-${positionRow}]`).parent().remove();
 
@@ -423,7 +423,7 @@ class GUI {
 			}
 		}
 
-		
+
 		//// console.log('delete row \n' + JSON.stringify(Column.getAll(), null, '\t'));
 	}
 
@@ -435,9 +435,9 @@ class GUI {
 		// cambio il pulsante del salvataggio
 		$('#add_col_val_act').addClass('d-none');
 		$('#save_col_val_act').removeClass('d-none');
-		
+
 		$('#modalAddColumnValidator div.modal-header h5').html('Edit column validator');
-		
+
 		$('#modalAddColumnValidator').modal("show");
 
 		//// console.log(Column.getAll());

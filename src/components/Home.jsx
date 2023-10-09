@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 // import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 // import { saveAs } from 'file-saver';
-import {Buffer} from 'buffer';
 
 import Validate from './Validate';
 import './styles/Home.css';
@@ -44,7 +43,7 @@ const Home = () => {
 	};
 
 
-	
+
 	const handleReset = () => {
 		// setCsvFile(Buffer.from("", "base64"));
 		// setValFile(Buffer.from("", "base64"));
@@ -60,7 +59,7 @@ const Home = () => {
 		setDelimitersLocked(true);
 	};
 
-	
+
 
 	return (
 		<div>
@@ -101,7 +100,7 @@ const Home = () => {
 									type="text"
 									id="dataenclosure"
 									value={dataEnclosure}
-									onChange={(e) => { 
+									onChange={(e) => {
                                         setDataEnclosure(e.target.value);
                                         if (areEnclosuresLocked) setValEnclosure(e.target.value);
                                     }}
@@ -142,7 +141,7 @@ const Home = () => {
 									type="text"
 									id="datadelimiter"
 									value={dataDelimiter}
-                                    onChange={(e) => { 
+                                    onChange={(e) => {
                                         setDataDelimiter(e.target.value);
                                         if (areDelimitersLocked) setValDelimiter(e.target.value);
                                     }}
@@ -155,7 +154,7 @@ const Home = () => {
 									type="text"
 									id="valdelimiter"
 									value={valDelimiter}
-									onChange={(e) => { 
+									onChange={(e) => {
                                         setValDelimiter(e.target.value);
                                         if (areDelimitersLocked) setValDelimiter(e.target.value);
                                     }}

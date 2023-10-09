@@ -4,7 +4,7 @@ import { Routes, Route } from 'react-router-dom';
 
 import Heading from './components/Heading';
 import Home from './components/Home';
-import Help from './components/Help'; 
+import Help from './components/Help';
 import About from './components/About';
 
 function App() {
