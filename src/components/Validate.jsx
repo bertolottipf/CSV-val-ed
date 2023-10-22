@@ -38,6 +38,7 @@ const Validate = ({
 		}
 
 		$("tbody td" + thisCellOnly).each(function () {
+			// console.log($(this).html());
 			const pattern = $(this).data("pattern");
 			const ignoreCase = $(this).data('ignorecase') === undefined ? false : $(this).data('ignorecase');
 			const string = $(this).text();
@@ -63,37 +64,32 @@ const Validate = ({
 
 	/**document ready**/
 	$(function () {
-		// var count = 0;
-		// /* scroll to 150px before .error with animation time of 1000ms */
-		// $('.navigation a').on('click', function (e) {
-		// 	e.preventDefault();
-		// 	var id = $(this).prop('id');
-		// 	//// console.log(`$('.error').length - 1: ${$('.error').length - 1}`);
-		// 	if (id === "next") {
-		// 		if (count < $('.error').length - 1) {
-		// 			count++;
-		// 		} else {
-		// 			count = 0;
-		// 			alert("reached end point");
-		// 		}
-		// 	} else {
-		// 		if (count > 0) {
-		// 			count--;
-		// 		} else {
-		// 			count = $('.error').length - 1;
-		// 			alert("reached start point");
-		// 		}
-		// 	}
-		// 	//// scrollToElement('.error:eq(' + count + ')');
-		// 	scrollToElement( count );
-		// });
+		var count = 0;
+		/* scroll to 150px before .error with animation time of 1000ms */
+		$('.navigation a').on('click', function (e) {
+			e.preventDefault();
+			var id = $(this).prop('id');
+			//// console.log(`$('.error').length - 1: ${$('.error').length - 1}`);
+			if (id === "next") {
+				if (count < $('.error').length - 1) {
+					count++;
+				} else {
+					count = 0;
+					alert("reached end point");
+				}
+			} else {
+				if (count > 0) {
+					count--;
+				} else {
+					count = $('.error').length - 1;
+					alert("reached start point");
+				}
+			}
+			//// scrollToElement('.error:eq(' + count + ')');
+			scrollToElement( count );
+		});
 
-		const csvDataClone = [...csvData]
-		csvDataClone.splice(1).forEach((row, rowIndex) => {
-			row.forEach((cell, cellIndex) => {
-				validate(cellIndex, rowIndex)
-			});
-		}); // ! TODO: errore!!!!!
+        validate()
 	});
 
 
@@ -115,7 +111,13 @@ const Validate = ({
 	const parseCsvData = (data) => {
 		const rows = data.split('\n');
 		const parsedData = rows.map((row) => {
-			const cells = row.split(dataDelimiter);
+
+			let regex = new RegExp(`${dataEnclosure}(.*?)${dataDelimiter}(.*?)${dataEnclosure}`, "g");
+
+			const cells = row.replace(regex, function(match){
+				return match.replace(/\s/g, '');
+			}).split(dataDelimiter);
+
 			return cells.map((cell) => cell.replaceAll(dataEnclosure, '')?.replace('\r', ''));
 		});
 		setCsvData(parsedData);
@@ -145,11 +147,6 @@ const Validate = ({
 
 
 
-	function instanceOfBlob(object){
-		return 'member' in Blob;
-	}
-
-
 
 	React.useEffect(() => {
 		const reader = new FileReader();
@@ -158,8 +155,10 @@ const Validate = ({
 			parseValData(content);
 		};
 		console.log(valFile);
-		if (valFile) {
+		if (valData) {
 			reader.readAsText(valFile);
+			
+			validate()
 		}
 	}, [valFile, valDelimiter, valEnclosure]);
 
@@ -174,6 +173,8 @@ const Validate = ({
 			} catch (error) {
 				console.error("Errore nell'esecuzione del codice jQuery:", error);
 			}
+			
+			validate()
 		}
 	}, [csvData, valData]);
 
@@ -183,7 +184,8 @@ const Validate = ({
 	const handleCellEdit = (rowIndex, cellIndex, value) => {
 		console.log(JSON.stringify(csvData));
 		csvData[rowIndex + 1][cellIndex] = value;
-		setCsvData(csvData);
+		///////setCsvData(csvData);
+		validate(cellIndex, rowIndex);
 	};
 
 
