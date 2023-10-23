@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import $ from "jquery"
 
-import './styles/Validate.css';
-
 import ActionBar from './ActionBar'
+
+import './styles/Validate.css';
 
 
 
@@ -114,11 +114,15 @@ const Validate = ({
 
 			let regex = new RegExp(`${dataEnclosure}(.*?)${dataDelimiter}(.*?)${dataEnclosure}`, "g");
 
-			const cells = row.replace(regex, function(match){
-				return match.replace(/\s/g, '');
-			}).split(dataDelimiter);
+			const cells = row.split(dataDelimiter);
 
-			return cells.map((cell) => cell.replaceAll(dataEnclosure, '')?.replace('\r', ''));
+			return cells.map((cell) => {
+				if (dataEnclosure != "") {
+					return cell.replace(/^\s+|\s+$/gm,'').replaceAll(dataEnclosure, '')?.replace('\r', '')
+                } else {
+					return cell.replaceAll(dataEnclosure, '')?.replace('\r', '')
+                }
+			});
 		});
 		setCsvData(parsedData);
 		return parsedData;
@@ -128,7 +132,7 @@ const Validate = ({
 		const rows = data.split('\n');
 		const parsedData = rows.map((row) => {
 			const cells = row.split(valDelimiter);
-			return cells.map((cell) => cell.replaceAll(valEnclosure, '')?.replace('\r', ''));
+			return cells.map((cell) => cell.replace(/^\s+|\s+$/gm,'').replaceAll(valEnclosure, '')?.replace('\r', ''));
 		});
 		setValData(parsedData);
 		return parsedData;
@@ -254,8 +258,6 @@ const Validate = ({
 
 		});
 
-		//// console.log("~~~~~~~~~~~~~~~~~~~~~ " + commands);
-		// return `$(function() {${commands}})`;
 		return `${commands}`;
 	}
 
@@ -290,7 +292,11 @@ const Validate = ({
 									onBlur={(e) =>
 										handleCellEdit(rowIndex, cellIndex, e.target.textContent)
 									}
+									style={{whiteSpace: "pre-wrap",	overflow: "auto", fontFamily: "sans-serif",
+											fontSize: 16+"px", lineHeight: 1.2,	margin: "0 0 10px 0",
+											padding: 10+"px"}}
 								>
+									{/* <pre style={{ fontFamily: "sans-serif", fontSize: 16+"px", lineHeight: 1.5, margin: 0, padding: 0}}>{item}</pre> */}
 									{item}
 								</td>
 							))}
