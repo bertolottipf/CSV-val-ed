@@ -17,19 +17,6 @@ const Validate = ({
 	onReset,
 }) => {
 
-	function scrollToElement(count) {
-		var selector = ('.error:eq(' + count + ')');
-
-		//// console.log(count);
-
-		$('html, body').animate({
-			scrollTop: $(selector).offset().top
-		}, 1000);
-
-		$(`.error:eq(${count})`).focus();
-	}
-
-
 	function validate(x = undefined, y = undefined) {
 
 		var thisCellOnly = "";
@@ -64,32 +51,7 @@ const Validate = ({
 
 	/**document ready**/
 	$(function () {
-		var count = 0;
-		/* scroll to 150px before .error with animation time of 1000ms */
-		$('.navigation a').on('click', function (e) {
-			e.preventDefault();
-			var id = $(this).prop('id');
-			//// console.log(`$('.error').length - 1: ${$('.error').length - 1}`);
-			if (id === "next") {
-				if (count < $('.error').length - 1) {
-					count++;
-				} else {
-					count = 0;
-					alert("reached end point");
-				}
-			} else {
-				if (count > 0) {
-					count--;
-				} else {
-					count = $('.error').length - 1;
-					alert("reached start point");
-				}
-			}
-			//// scrollToElement('.error:eq(' + count + ')');
-			scrollToElement( count );
-		});
-
-        validate()
+		validate()
 	});
 
 
@@ -103,9 +65,9 @@ const Validate = ({
 
 
 	const [csvData, setCsvData] = useState([]);
-	//// console.log('-----------------------------------------------' + csvData + '-----------------------------------------------')
+	console.log('-----------------------------------------------' + csvData + '-----------------------------------------------')
 	const [valData, setValData] = useState([]);
-	//// console.log('-----------------------------------------------' + valData + '-----------------------------------------------')
+	console.log('-----------------------------------------------' + valData + '-----------------------------------------------')
 
 
 	const parseCsvData = (data) => {
@@ -117,10 +79,10 @@ const Validate = ({
 			const cells = row.split(dataDelimiter);
 
 			return cells.map((cell) => {
-				if (dataEnclosure != "") {
+				if (dataEnclosure !== "") {
 					return cell.replace(/^\s+|\s+$/gm,'').replaceAll(dataEnclosure, '')?.replace('\r', '')
                 } else {
-					return cell.replaceAll(dataEnclosure, '')?.replace('\r', '')
+					return cell.replace('\r', '')
                 }
 			});
 		});
@@ -132,7 +94,14 @@ const Validate = ({
 		const rows = data.split('\n');
 		const parsedData = rows.map((row) => {
 			const cells = row.split(valDelimiter);
-			return cells.map((cell) => cell.replace(/^\s+|\s+$/gm,'').replaceAll(valEnclosure, '')?.replace('\r', ''));
+			return cells.map((cell) => {
+				if (valEnclosure !== "") {
+					return cell.replace(/^\s+|\s+$/gm,'').replaceAll(valEnclosure, '')?.replace('\r', '')
+				} else {
+					return cell.replace('\r', '')
+				}
+			});
+			
 		});
 		setValData(parsedData);
 		return parsedData;
@@ -188,7 +157,6 @@ const Validate = ({
 	const handleCellEdit = (rowIndex, cellIndex, value) => {
 		console.log(JSON.stringify(csvData));
 		csvData[rowIndex + 1][cellIndex] = value;
-		///////setCsvData(csvData);
 		validate(cellIndex, rowIndex);
 	};
 

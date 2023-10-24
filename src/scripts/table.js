@@ -1,4 +1,4 @@
-sortTable = (tableName, colN) => {
+const sortTable = (tableName, colN) => {
 	var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0, i, xCompare, yCompare;
 	table = document.getElementById(tableName);
 
@@ -89,7 +89,7 @@ sortTable = (tableName, colN) => {
 }
 
 
-htmlToCSV = (html, filename) => {
+const htmlToCSV = (html, filename) => {
 	var data = [];
 	var rows = document.querySelectorAll(`table tr`);
 
@@ -107,7 +107,7 @@ htmlToCSV = (html, filename) => {
 }
 
 
-downloadCSVFile = (csv, filename) => {
+const downloadCSVFile = (csv, filename) => {
 	var csv_file, download_link;
 	csv_file = new Blob([csv], { type: `text/csv` });
 	download_link = document.createElement(`a`);
@@ -227,7 +227,7 @@ $(function () {
 			x = getSortedPosition()[0];
 			y = getSortedPosition()[1]+1;
 			$(`tr[data-ysort=${y}] > td[data-x=${x}]`).focus();
-			valueToCopy = $(`:focus`).text();
+			constvalueToCopy = $(`:focus`).text();
 			// valueToCopyFocus = $(`:focus`).text();
 			//valueToCopyPosition = $(`tr[data-ysort=${y}] td[data-x=${x}]`).text();
 		} else if (e.ctrlKey) {
