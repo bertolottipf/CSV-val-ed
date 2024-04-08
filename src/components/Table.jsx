@@ -1,7 +1,7 @@
-import  React from "react";
+import React from "react";
 import $ from "jquery"
 
-	function Table() {
+const Table = () =>  {
 
 
 	const sortTable = (tableName, colN) => {
@@ -95,6 +95,18 @@ import $ from "jquery"
 	}
 
 
+	const downloadCSVFile = (csv, filename) => {
+		var csv_file, download_link;
+		csv_file = new Blob([csv], { type: `text/csv` });
+		download_link = document.createElement(`a`);
+		download_link.download = filename;
+		download_link.href = window.URL.createObjectURL(csv_file);
+		download_link.style.display = `none`;
+		document.body.appendChild(download_link);
+		download_link.click();
+	}
+
+
 	const htmlToCSV = (html, filename) => {
 		var data = [];
 		var rows = document.querySelectorAll(`table tr`);
@@ -111,19 +123,6 @@ import $ from "jquery"
 
 		downloadCSVFile(data.join("\n"), filename);
 	}
-
-
-	const downloadCSVFile = (csv, filename) => {
-		var csv_file, download_link;
-		csv_file = new Blob([csv], { type: `text/csv` });
-		download_link = document.createElement(`a`);
-		download_link.download = filename;
-		download_link.href = window.URL.createObjectURL(csv_file);
-		download_link.style.display = `none`;
-		document.body.appendChild(download_link);
-		download_link.click();
-	}
-
 
 
 	$(function () {
@@ -189,7 +188,6 @@ import $ from "jquery"
 				});
 
 				// obbligo di validare tutto perché non è solo una cella incollata
-				//// validate($(this).attr('data-x'), $(this).attr('data-y'));
 				validate($(this).attr('data-x'), $(this).attr('data-y'));
 			}
 		})
@@ -215,23 +213,23 @@ import $ from "jquery"
 		$(document).keydown(function (e) {
 			var x, y;
 			if (e.keyCode == 37 && e.altKey && e.ctrlKey) { // left
-				x = getSortedPosition()[0]-1;
+				x = getSortedPosition()[0] - 1;
 				y = getSortedPosition()[1];
 				$(`tr[data-ysort=${y}] > td[data-x=${x}]`).focus();
 				valueToCopy = $(`td[data-x=${x}][data-y=${y}]`).text();
 			} else if (e.keyCode == 38 && e.altKey && e.ctrlKey) { // up
 				x = getSortedPosition()[0];
-				y = getSortedPosition()[1]-1;
+				y = getSortedPosition()[1] - 1;
 				$(`tr[data-ysort=${y}] > td[data-x=${x}]`).focus();
 				valueToCopy = $(`td[data-x=${x}][data-y=${y}]`).text();
 			} else if (e.keyCode == 39 && e.altKey && e.ctrlKey) { // right
-				x = getSortedPosition()[0]+1;
+				x = getSortedPosition()[0] + 1;
 				y = getSortedPosition()[1];
 				$(`tr[data-ysort=${y}] > td[data-x=${x}]`).focus();
 				valueToCopy = $(`td[data-x=${x}][data-y=${y}]`).text();
 			} else if (e.keyCode == 40 && e.altKey && e.ctrlKey) { // down
 				x = getSortedPosition()[0];
-				y = getSortedPosition()[1]+1;
+				y = getSortedPosition()[1] + 1;
 				$(`tr[data-ysort=${y}] > td[data-x=${x}]`).focus();
 				constvalueToCopy = $(`:focus`).text();
 				// valueToCopyFocus = $(`:focus`).text();
@@ -266,3 +264,5 @@ import $ from "jquery"
 	});
 
 }
+
+export default Table;

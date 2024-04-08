@@ -16,19 +16,21 @@ const Validate = ({
 	valDelimiter,
 	onReset,
 }) => {
+	
 
 	function validate(x = undefined, y = undefined) {
 
+
 		var thisCellOnly = "";
 		if (x !== undefined && y !== undefined) {
-			thisCellOnly = `[data-x=${x}][data-y=${y}]`;
-		}
+			thisCellOnly = `[data-x="${x}"][data-y="${y}"]`;
+		} 
 
-		$("tbody td" + thisCellOnly).each(function () {
-			// console.log($(this).html());
-			const pattern = $(this).data("pattern");
-			const ignoreCase = $(this).data('ignorecase') === undefined ? false : $(this).data('ignorecase');
-			const string = $(this).text();
+		
+		document.querySelectorAll("tbody td" + thisCellOnly).forEach(el => {
+			const pattern = el.getAttribute("data-pattern");
+			const ignoreCase = el.getAttribute("data-ignorecase") === undefined ? false : el.getAttribute("data-ignorecase");
+			const string = el.innerText;
 			let re;
 			if (ignoreCase) {
 				re = new RegExp("^" + pattern + "$", "i");
@@ -36,27 +38,30 @@ const Validate = ({
 				re = new RegExp("^" + pattern + "$");
 			}
 
-			//alert(re.test(string));
-			if (!re.test(string) && pattern !== undefined) {
-				$(this).addClass("error");
+			if (!re.test(string) && pattern != null ) {
+				el.classList.add('error');
 			} else {
-				$(this).removeClass("error");
+				el.classList.remove("error");
 			}
 
-			$('#nErrors').html($('.error').length);
+			const nErrorsElement = document.getElementById("nErrors");
+			const errors = document.querySelectorAll(".error");
+			nErrorsElement.innerHTML = errors.length;
+
 		})
 
 	}
 
 
-	/**document ready**/
-	$(function () {
-		validate()
+	window.addEventListener('load', function () {
+		if (valFile) {
+			validate()
+			setErrorCheck(true);
+		}
 	});
 
 
-
-
+	
 
 
 
@@ -65,9 +70,11 @@ const Validate = ({
 
 
 	const [csvData, setCsvData] = useState([]);
-	console.log('-----------------------------------------------' + csvData + '-----------------------------------------------')
+	//console.log('-----------------------------------------------' + csvData + '-----------------------------------------------')
 	const [valData, setValData] = useState([]);
-	console.log('-----------------------------------------------' + valData + '-----------------------------------------------')
+	//console.log('-----------------------------------------------' + valData + '-----------------------------------------------')
+	const [errorsCheck, setErrorCheck] = useState(false);
+	
 
 
 	const parseCsvData = (data) => {
@@ -128,7 +135,7 @@ const Validate = ({
 			parseValData(content);
 		};
 		console.log(valFile);
-		if (valData) {
+		if (valFile) {
 			reader.readAsText(valFile);
 			
 			validate()
@@ -140,9 +147,11 @@ const Validate = ({
 	React.useEffect(() => {
 		if (valData.length > 0) {
 			const val = getValidator()
+			
 			try {
+
+				console.info("eval!!!" + val)
 				eval(val); // Esegui il codice jQuery
-				console.info("eval!!!")
 			} catch (error) {
 				console.error("Errore nell'esecuzione del codice jQuery:", error);
 			}
@@ -181,40 +190,82 @@ const Validate = ({
 
 						case 'L':
 							if (valEl[2] === "=") {
-								command = `$("[ data-x='${csvColumnIndex}' ]").attr('data-pattern', '.{${dataConfronto}}');\n`;
+								//command = `$("[ data-x='${csvColumnIndex}' ]").attr('data-pattern', '.{${dataConfronto}}');\n`;
+								command = `document
+										.querySelectorAll("[ data-x='${csvColumnIndex}' ]")
+										.forEach(el => el.setAttribute('data-pattern', '.{${dataConfronto}}'));\n`;
 							} else if (valEl[2] === ">") {
-								command = `$("[ data-x='${csvColumnIndex}' ]").attr('data-pattern', '.{${dataConfronto+1},}');\n`;
+								//command = `$("[ data-x='${csvColumnIndex}' ]").attr('data-pattern', '.{${dataConfronto+1},}');\n`;
+								command = `document
+										.querySelectorAll("[ data-x='${csvColumnIndex}' ]")
+										.forEach(el => el.setAttribute('data-pattern', '.{${dataConfronto+1},}'));\n`;
 							} else if (valEl[2] === ">=") {
-								command = `$("[ data-x='${csvColumnIndex}' ]").attr('data-pattern', '.{${dataConfronto},}');\n`;
+								//command = `$("[ data-x='${csvColumnIndex}' ]").attr('data-pattern', '.{${dataConfronto},}');\n`;
+								command = `document
+										.querySelectorAll("[ data-x='${csvColumnIndex}' ]")
+										.forEach(el => el.setAttribute('data-pattern', '.{${dataConfronto},}'));\n`;
 							} else if (valEl[2] === "<") {
-								command = `$("[ data-x='${csvColumnIndex}' ]").attr('data-pattern', '.{0,${dataConfronto-1}}');\n`;
+								//command = `$("[ data-x='${csvColumnIndex}' ]").attr('data-pattern', '.{0,${dataConfronto-1}}');\n`;
+								command = `document
+										.querySelectorAll("[ data-x='${csvColumnIndex}' ]")
+										.forEach(el => el.setAttribute('data-pattern', '.{0,${dataConfronto-1}}'));\n`;
 							} else if (valEl[2] === "<=") {
-								command = `$("[ data-x='${csvColumnIndex}' ]").attr('data-pattern', '.{0,${dataConfronto}}');\n`;
+								// command = `$("[ data-x='${csvColumnIndex}' ]").attr('data-pattern', '.{0,${dataConfronto}}');\n`;
+								command = `document
+										.querySelectorAll("[ data-x='${csvColumnIndex}' ]")
+										.forEach(el => el.setAttribute('data-pattern', '.{0,${dataConfronto}}'));\n`;
 							}
 							break;
 
 						case 'R':
-							command = `$("[ data-x='${csvColumnIndex}' ]").attr('data-pattern', '${dataConfronto}');\n`;
+							// command = `$("[ data-x='${csvColumnIndex}' ]").attr('data-pattern', '${dataConfronto}');\n`;
+							command = `document
+									.querySelectorAll("[ data-x='${csvColumnIndex}' ]")
+									.forEach(el => el.setAttribute('data-pattern', '${dataConfronto}'));\n`;
 							break;
 						case 'RI':
-							command = `$("[ data-x='${csvColumnIndex}' ]").attr('data-pattern', '${dataConfronto}');\n`;
-							command += `$("[ data-x='${csvColumnIndex}' ]").attr('data-ignorecase', 'true');\n`;
+							/* command = `$("[ data-x='${csvColumnIndex}' ]").attr('data-pattern', '${dataConfronto}');\n`;
+							command += `$("[ data-x='${csvColumnIndex}' ]").attr('data-ignorecase', 'true');\n`; */
+							command = `document
+									.querySelectorAll("[ data-x='${csvColumnIndex}' ]")
+									.forEach(el => {
+										el.setAttribute('data-pattern', '${dataConfronto}')
+											.setAttribute('data-ignorecase', 'true')
+									});\n`;
 							break;
 
 						case 'S':
-							command = `$("[ data-x='${csvColumnIndex}' ]").attr('data-pattern', '(${dataConfronto})');\n`;
+							// command = `$("[ data-x='${csvColumnIndex}' ]").attr('data-pattern', '(${dataConfronto})');\n`;
+							command = `document
+									.querySelectorAll("[ data-x='${csvColumnIndex}' ]")
+									.forEach(el => el.setAttribute('data-pattern', '(${dataConfronto})'));\n`;
 							break;
 						case 'SI':
-							command = `$("[ data-x='${csvColumnIndex}' ]").attr('data-pattern', '(${dataConfronto})');\n`;
-							command += `$("[ data-x='${csvColumnIndex}' ]").attr('data-ignorecase', 'true');\n`;
+							/* command = `$("[ data-x='${csvColumnIndex}' ]").attr('data-pattern', '(${dataConfronto})');\n`;
+							command += `$("[ data-x='${csvColumnIndex}' ]").attr('data-ignorecase', 'true');\n`; */
+							command = `document
+									.querySelectorAll("[ data-x='${csvColumnIndex}' ]")
+									.forEach(el => {
+										el.setAttribute('data-pattern', '(${dataConfronto})');
+											el.setAttribute('data-ignorecase', 'true');
+									});\n`;
 							break;
 
 						case 'U':
-							command = `$("[ data-x='${csvColumnIndex}' ]").attr('data-pattern', '(${dataConfronto})');\n`;
+							// command = `$("[ data-x='${csvColumnIndex}' ]").attr('data-pattern', '(${dataConfronto})');\n`;
+							command = `document
+									.querySelectorAll("[ data-x='${csvColumnIndex}' ]")
+									.forEach(el => el.setAttribute('data-pattern', '(${dataConfronto})'));\n`;
 							break;
 						case 'UI':
-							command = `$("[ data-x='${csvColumnIndex}' ]").attr('data-pattern', '(${dataConfronto})');\n`;
-							command += `$("[ data-x='${csvColumnIndex}' ]").attr('data-ignorecase', 'true');\n`;
+							// command = `$("[ data-x='${csvColumnIndex}' ]").attr('data-pattern', '(${dataConfronto})');\n`;
+							// command += `$("[ data-x='${csvColumnIndex}' ]").attr('data-ignorecase', 'true');\n`;
+							command = `document
+									.querySelectorAll("[ data-x='${csvColumnIndex}' ]")
+									.forEach(el => {
+										el.setAttribute('data-pattern', '(${dataConfronto})')
+											.setAttribute('data-ignorecase', 'true')
+									});\n`;
 							break;
 					}
 					console.log(command)
@@ -226,11 +277,13 @@ const Validate = ({
 
 		});
 
+
 		return `${commands}`;
 	}
 
 
-
+	
+	
 	return (
 		<div>
 
@@ -274,7 +327,9 @@ const Validate = ({
 			</table>
 			<button onClick={onReset}>Back</button>
 
-			<ActionBar></ActionBar>
+			
+
+			<ActionBar errorsCheck={valFile!= undefined}></ActionBar>
 		</div>
 	);
 };
