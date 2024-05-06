@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import $ from "jquery"
 
-import ActionBar from './ActionBar'
+import ActionBar from './ActionBar';
 
 import './styles/Validate.css';
 
@@ -329,7 +328,7 @@ const Validate = ({
 
 			
 
-			<ActionBar errorsCheck={valFile!= undefined}></ActionBar>
+			<ActionBar errorsCheck={valFile!== undefined}></ActionBar>
 		</div>
 	);
 };

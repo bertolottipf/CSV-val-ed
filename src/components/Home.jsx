@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 // import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 // import { saveAs } from 'file-saver';
- import $ from "jquery"
+// import $ from "jquery"
 
 import Validate from './Validate';
+import Alert from './Alert';
 import './styles/Home.css';
 
 
@@ -32,16 +33,16 @@ const Home = () => {
 	const [areDelimitersLock, setDelimitersLock] = useState(true);
 
 
-	const showAlert = (el, msg) => {
-		$(el).html(`<div class="alert alert-info show">
+	/*const showAlert = (el, msg) => {
+		el.innerHTML = `<div class="alert alert-info show">
 				<button type="button" class="close close-alert" data-dismiss="alert" aria-hidden="true" onclick="this.parentElement.remove()">
 					<span aria-hidden="true">
 						&times;
 					</span>
 				</button>
 				${msg}
-			</div>`);
-	}
+			</div>`;
+	}*/
 
 
 	///////////////////////////////
@@ -248,6 +249,7 @@ const Home = () => {
 							</div>
 
 							<div className="row" id="delimitersMsg"></div>
+							<Alert></Alert>
 						</div>
 
 					</div>
